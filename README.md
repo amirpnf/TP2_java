@@ -68,7 +68,7 @@ Here `s9` is a new instance of String class, storing the return value of `s8.toU
 # Exercise 2
 
 
-1. Here's a class `Morse`, printing the strings given as arguments, separated by by `"Stop."` :
+1. Here's a class `Morse`, printing the strings given as arguments, separated by `"Stop."` :
 
 ```java
 public class Morse {
