@@ -4,7 +4,7 @@ public class Morse {
         System.out.println(res);
     }
 
-    /* public static String join(String[] array, String separator) {
+    public static String join(String[] array, String separator) {
         var build = new StringBuilder();
         var sep = "";
         for(var i : array) {
@@ -13,14 +13,14 @@ public class Morse {
         }
         build.append(sep);
         return build.toString();
-    } */
+    } 
 
-    public static String join(String[] array, String separator) {
+    /* public static String join(String[] array, String separator) {
         var res = array[0] + separator;
         for (int i = 1; i < array.length; i++) {
             res = res + array[i] + separator;
         }
         return res;
-    }
+    }*/
 
 }
