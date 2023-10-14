@@ -358,7 +358,7 @@ public static byte[] ipParser(String ipAddress) {
 A valid ipv4 IP address is in this form : `xxx.xxx.xxx.xxx` ,
 in which each `xxx` is a number between 0 and 255.
 
-Now, if we need to print this arrays of bytes, we must make sure not 
+Now, if we need to print this array of bytes, we must make sure not 
 to have any negative value in the printed bytes. To achieve this, we'll use 
 **binary mask**, in this case,  **`0xFF`** to ensure all the values are positive.
 
