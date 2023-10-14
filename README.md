@@ -119,7 +119,7 @@ Here `s9` is a new instance of String class, storing the return value of `s8.toU
 
 1. Utiliser dans un premier temps l'opérateur + qui permet la concaténation de chaînes de caractères. 
 
-**Answer** : Here's a class `Morse`, printing the strings given as arguments, separated by by `"Stop."` :
+**Answer** : Here's a class `Morse`, printing the strings given as arguments, separated by `"Stop."` :
 
 ```java
 public class Morse {
@@ -320,7 +320,7 @@ public class Reg {
       }
     }
   }    
-
+}
 ```
 
 4. Écrire une méthode qui prend en paramètre une chaîne de caractères contenant une adresse IPv4 et renvoie un tableau de 4 bytes. Il faut tester qu'il s'agit bien d'une adresse valide. Vous utiliserez pour cela la notion de groupe.
@@ -357,6 +357,10 @@ public static byte[] ipParser(String ipAddress) {
 
 A valid ipv4 IP address is in this form : `xxx.xxx.xxx.xxx` ,
 in which each `xxx` is a number between 0 and 255.
+
+Now, if we need to print this arrays of bytes, we must make sure not 
+to have any negative value in the printed bytes. To achieve this, we'll use 
+**binary mask**, in this case,  **`0xFF`** to ensure all the values are positive.
 
 
 
