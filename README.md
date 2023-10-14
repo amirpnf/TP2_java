@@ -3,7 +3,14 @@
 
 # Exercise 1
 
-1. Using `var` we don't need to explicitly declare the type, the compiler 
+1. On considère le code suivant :
+```java
+var s = "toto";
+System.out.println(s.length());
+```     
+Quel est le type de s ? Comment le compilateur fait-il pour savoir qu'il existe une méthode length() sur s ? 
+
+**Answer** : Using `var` we don't need to explicitly declare the type, the compiler 
 will infer it by looking at what is used as the initializer of this
 variable when declared.
 By knowing the type of this variable, the compiler can verify if
@@ -13,7 +20,17 @@ Hence, here `s` is initialized with "toto" which is a string, so the
 compiler will know it's a String class object, on which there is a 
 `length()` method defined.
 
-2. In java, Object typed are handled by address.
+2. Qu'affiche le code suivant ? Expliquer.
+```java
+var s1 = "toto";
+var s2 = s1;
+var s3 = new String(s1);
+
+System.out.println(s1 == s2);
+System.out.println(s1 == s3);
+```     
+
+**Answer** : In java, Object typed are handled by address.
 `s1` is a literal string, because it's value starts with quotes ("").
 literal strings are stored in a dictionnary at runtime.
 
@@ -30,17 +47,35 @@ However, `System.out.println(s1 == s3);` prints false, because `s3` is a new
 object as it's created using the keyword `new`, hence it has a different address
 in memory, and `s1 == s3` results false as `s1` and `s2 don't have the same value.
 
-3. The method `equals()` can be used to compare two strings, first by their have
+3. Quelle est la méthode à utiliser si l'on veut tester si le contenu des chaînes de caractères est le même ?
+```java
+var s4 = "toto";
+var s5 = new String(s4);
+
+System.out.println(/* comparer contenue de s4 et s5 */);
+```      
+
+**Answer** : The method `equals()` can be used to compare two strings, first by their have
 length and then by their characters.
 This method is a part of `java.lang.String` library, which is a part of Java Standard 
 Library, and you don't need to import any specific package to use it.
 
-4. `s6` and `s7` are literal strings. As previously mentionned, literal strings are stored in a
+4. Qu'affiche le code suivant ? Expliquer.
+```java
+var s6 = "toto";
+var s7 = "toto";
+
+System.out.println(s6 == s7);
+```     
+
+**Answer** : `s6` and `s7` are literal strings. As previously mentionned, literal strings are stored in a
 dictionnary/cache at runtime. This implies that `s6` and `s7` have the same address in memory
 (they reference the same object `"toto"` in memory), therefore `System.out.println(s6 == s7)`
 will ultimately print true as `==` compares addresses when used with objects.
 
-5. First of all, Java saves a lot of heap space because different string variables can refer
+5. Expliquer pourquoi il est important que java.lang.String ne soit pas mutable. 
+
+**Answer** : First of all, Java saves a lot of heap space because different string variables can refer
 to the same thing in memory.
 Secondly, if String class wasn't immutable it would cause several security threats to the
 application. 
@@ -49,7 +84,15 @@ and therefore it doesn't need to be recalculated again.
 At last, the fact that the String Class is immutable, makes if safe for multi-
 threading. A single instance can be shared across multiple threads.
 
-6. As mentionned before, String class is immutable. That means, once created,
+6. Qu'affiche le code suivant ?
+```java
+var s8 = "hello";
+s8.toUpperCase();
+System.out.println(s8);
+```     
+Expliquer. 
+
+**Answer** : As mentionned before, String class is immutable. That means, once created,
 their value can't be modified. The method `toUpperCase()` doesn't 
 change the object, but it returns a new instance of the String class, containing
 the characters of `s8`, in capitals. Therefore, a call to `System.out.println(s8);`
@@ -67,8 +110,16 @@ Here `s9` is a new instance of String class, storing the return value of `s8.toU
 
 # Exercise 2
 
+Écrire une classe Morse qui permet, lors de son exécution, d'afficher les chaînes de caractères prises en argument séparées par des "Stop.".
+```bash
+      $ java Morse ceci est drole
+      ceci Stop. est Stop. drole Stop.
+```    
 
-1. Here's a class `Morse`, printing the strings given as arguments, separated by by `"Stop."` :
+
+1. Utiliser dans un premier temps l'opérateur + qui permet la concaténation de chaînes de caractères. 
+
+**Answer** : Here's a class `Morse`, printing the strings given as arguments, separated by by `"Stop."` :
 
 ```java
 public class Morse {
@@ -88,7 +139,10 @@ public class Morse {
 ```
 The `join` method uses the `+` operator to concatenate the strings.
 
-2. The `java.lang.StringBuilder` object is an extensible buffer of characters,
+2. A quoi sert l'objet java.lang.StringBuilder ?
+Pourquoi sa méthode append(String) renvoie-t-elle un objet de type `StringBuilder` ? 
+
+**Answer** : The `java.lang.StringBuilder` object is an extensible buffer of characters,
 allowing you to build a string without having too many intermediate string
 allocation. 
 The `append` method of this class (StringBuilder) returns a StringBuilder object
@@ -100,7 +154,10 @@ the StringBuilder class is mutable, unlike String class. So when you write
 `build.append(separator)`, the current StringBuilder object is modified, there's no
 new object created.
 
-3. Here's the `Morse` class, now using `StringBuilder`:
+3. Réécrire la classe Morse en utilisant un StringBuilder. 
+Quel est l'avantage par rapport à la solution précédente ? 
+
+**Answer** : Here's the `Morse` class, now using `StringBuilder`:
 
 ```java
 public class Morse {
@@ -129,7 +186,24 @@ considerably increase the performance et reduce the memory use, when you are han
 massive quantities of data.  
 
 
-4. Here it is :
+4. Recopier le code suivant dans une classe de Test :
+```java
+public static void main(String[] args) {
+  var first = args[0];
+  var second = args[1];
+  var last = args[2];
+  System.out.println(first + ' ' + second + ' ' + last);
+}
+```
+Pourquoi peut-on utiliser ' ' à la place de " " ?
+Compiler le code puis utiliser la commande javap pour afficher le bytecode Java (qui n'est pas un assembleur) généré.
+```bash
+javap -c Test
+```      
+
+Que pouvez-vous en déduire ? 
+
+**Answer** : Here it is :
 
 ```java
 public class Test {
@@ -158,7 +232,12 @@ In summary, in the context of string concatenation in Java, we can use either
 `""` or `''` to represent these spaces, and the compiler will treat them in the 
 same way.
 
-5. If we use `javap -c` on question 1, we can see that, using 
+5. Compiler le code de la question 1, puis utiliser la commande javap pour afficher le bytecode Java généré.
+Que pouvez-vous en déduire ?
+Dans quel cas doit-on utiliser StringBuilder.append() plutôt que le + ?
+Et pourquoi est-ce que le chargé de TD va me faire les gros yeux si j'écris un + dans un appel à la méthode append? 
+
+**Answer** : If we use `javap -c` on question 1, we can see that, using 
 StringBuilder, instead of `invokedynamic`, we'll have `invokevirtual`, that means, StringBuilder doesn't actually concatenate, those are virtual strings and as a consequence,
 it would create less String objects in memory, which is somehow more efficient.
 
@@ -173,7 +252,14 @@ The TP responsible would look me in the eye bizarrely if I use
 
 # Exercise 3
 
-1. `java.util.regex.Pattern` class and its method `compile` are used for following purposes :
+Le but de cet exercice est la manipulation d'expressions régulières en java. Nous utiliserons pour cela les classes du paquetage javautil.regex.
+
+
+1. A quoi servent la classe java.util.regex.Pattern et sa méthode compile ?
+A quoi sert la classe java.util.regex.Matcher ? 
+
+
+**Answer** : `java.util.regex.Pattern` class and its method `compile` are used for following purposes :
 
 - Pattern compilation: the `compile` method takes a regular expression as a string and tranforms
 it into an internal representation that can be used for pattern matching operations.
@@ -190,7 +276,9 @@ such as :
 - end() -> index of the character where that matched portion ends
 etc.
 
-2. Here's a java program printing just numbers out of all arguments given in the command line :
+2. Écrire un programme qui lit des chaînes de caractères sur la ligne de commande et affiche les chaînes qui correspondent à des nombres, c'est-à-dire les chaînes dont tous les caractères sont compris entre '0' et '9'. 
+
+**Answer** : Here's a java program printing just numbers out of all arguments given in the command line :
 ```java
 import java.util.regex.*;
 
@@ -205,7 +293,12 @@ public class Reg {
 }
 ```
 
-3. Here's a Java program, finding and extracting between command line arguments, even if these
+3. Modifier le programme pour que l'on reconnaisse (et extrait) un nombre même dans le cas où le nombre est précédé par des caractères qui ne sont pas des chiffres.
+Par exemple, les chaïnes "abc", "4de" et "f6h" ne sont pas valide car soit il n'y a pas de nombre soit elles ne finissent pas par un nombre. La chaïne "789" correspond au nombre 789 et la chaïne "ab3" correspond au nombre 3 (les caractères avant le nombre ne sont pas pris en compte).
+Note: il y a plusieurs façons de faire, penser que matches() n'est pas la seule méthode qui existe sur un Matcher.
+Attention: on ne veut pas créer plusieurs Pattern différents, ou plusieurs Matcher différents (il y a plus simple). 
+
+**Answer** : Here's a Java program, finding and extracting between command line arguments, even if these
 numbers are preceded by non-digit characters. 
 ```java
 import java.util.regex.*;
@@ -230,7 +323,11 @@ public class Reg {
 
 ```
 
-4. Here's a Java method receiving an ipv4 IP address as argument and returns the correponding 4 element
+4. Écrire une méthode qui prend en paramètre une chaîne de caractères contenant une adresse IPv4 et renvoie un tableau de 4 bytes. Il faut tester qu'il s'agit bien d'une adresse valide. Vous utiliserez pour cela la notion de groupe.
+
+
+
+**Answer** : Here's a Java method receiving an ipv4 IP address as argument and returns the correponding 4 element
 byte array.
 
 ```java
